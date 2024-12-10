@@ -52,11 +52,6 @@ func (b *BoltDB) GetBlock(hash string) ([]byte, error) {
 	return data, err
 }
 
-// Close Closing the database
-func (b *BoltDB) Close() error {
-	return b.db.Close()
-}
-
 // Iterate Iterating over the blocks
 func (b *BoltDB) Iterate(callback func(hash string, data []byte) error) error {
 	return b.db.View(func(tx *bbolt.Tx) error {
@@ -65,4 +60,9 @@ func (b *BoltDB) Iterate(callback func(hash string, data []byte) error) error {
 			return callback(string(k), v)
 		})
 	})
+}
+
+// Close Closing the database
+func (b *BoltDB) Close() error {
+	return b.db.Close()
 }
